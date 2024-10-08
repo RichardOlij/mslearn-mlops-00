@@ -25,24 +25,21 @@ workspace:
 		--location ${LOCATION} \
 		--name ${WORKSPACE_NAME}
 
-# workspace-delete:
-# 	az ml workspace delete \
-# 		--resource-group ${RESOURCE_GROUP_NAME} \
-# 		--name ${WORKSPACE_NAME}
-
-instance:
-	az ml compute create \
-		--resource-group ${RESOURCE_GROUP_NAME} \
-		--workspace-name ${WORKSPACE_NAME} \
-		--name custom-aml-instance \
-		--type computeinstance \
-		--size STANDARD_DS3_v2
-
-# instance-delete:
-# 	az ml compute delete \
+# instance:
+# 	az ml compute create \
+# 		--file configuration/compute-instance-config.yml \
 # 		--resource-group ${RESOURCE_GROUP_NAME} \
 # 		--workspace-name ${WORKSPACE_NAME} \
+# 		--location ${LOCATION} \
 # 		--name custom-aml-instance
+
+cluster: # For github a cluster is needed.
+	az ml compute create \
+		--file configuration/compute-cluster-config.yml \
+		--resource-group ${RESOURCE_GROUP_NAME} \
+		--workspace-name ${WORKSPACE_NAME} \
+		--location ${LOCATION} \
+		--name custom-aml-cluster
 
 job:
 	az ml job create \
