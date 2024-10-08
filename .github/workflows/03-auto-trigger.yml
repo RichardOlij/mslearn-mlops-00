@@ -19,7 +19,7 @@ jobs:
       run: | 
         flake8 src/model/
   unittesting:
-    name: linting
+    name: unittesting
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
