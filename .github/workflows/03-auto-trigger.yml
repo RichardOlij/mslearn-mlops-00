@@ -1,0 +1,10 @@
+on:
+  pull_request:
+    types: [opened, reopened]
+jobs:
+  specific_review_requested:
+    name: PR request
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Will add code checks here in next challenge"
