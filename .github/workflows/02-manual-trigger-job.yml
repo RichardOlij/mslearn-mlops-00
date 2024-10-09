@@ -6,6 +6,7 @@ on:
 jobs:
   train:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
     - name: Check out repo
       uses: actions/checkout@main
@@ -16,6 +17,6 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: run challenge 1 job
-      run: make job
+      run: make job-experiment
 
 

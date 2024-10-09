@@ -1,10 +1,11 @@
 LOCATION='westeurope'
-RESOURCE_GROUP_NAME = 'rg-makefile-ms-course-2'
+RESOURCE_GROUP_NAME = 'rg-makefile-ms-course-4'
 WORKSPACE_NAME = 'mlws-makefile-ms-course'
-SERVICE_PRINCIPAL_NAME = 'sp-ms-course'
+SERVICE_PRINCIPAL_NAME_EXPERIMENT = 'sp-ms-course-exp'
+SERVICE_PRINCIPAL_NAME_PRODUCTION = 'sp-ms-course-prod'
 SUBSCRIPTION_ID = 'cf8cebc1-45e2-4a8e-a4ec-b01521fed8e3'
 
-all: resourcegroup workspace instance job
+all: resourcegroup workspace cluster create-service-principals
 delete: resourcegroup-delete
 
 login:
@@ -41,15 +42,32 @@ cluster: # For github a cluster is needed.
 		--location ${LOCATION} \
 		--name custom-aml-cluster
 
-job:
-	az ml job create \
-		--file src/job.yml \
-		--resource-group ${RESOURCE_GROUP_NAME} \
-		--workspace-name ${WORKSPACE_NAME}
-
-create-service-principal:
+create-service-principals:
 	az ad sp create-for-rbac \
-		--name ${SERVICE_PRINCIPAL_NAME} \
+		--name ${SERVICE_PRINCIPAL_NAME_EXPERIMENT} \
 		--role contributor \
 		--scopes /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME} \
         --sdk-auth
+	az ad sp create-for-rbac \
+		--name ${SERVICE_PRINCIPAL_NAME_PRODUCTION} \
+		--role contributor \
+		--scopes /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME} \
+        --sdk-auth
+
+# job:
+# 	az ml job create \
+# 		--file src/job.yml \
+# 		--resource-group ${RESOURCE_GROUP_NAME} \
+# 		--workspace-name ${WORKSPACE_NAME}
+job-experiment:
+	az ml job create \
+		--stream \
+		--file src/job_experiment.yml \
+		--resource-group ${RESOURCE_GROUP_NAME} \
+		--workspace-name ${WORKSPACE_NAME}
+job-production:
+	az ml job create \	
+		--stream \
+		--file src/job_production.yml \
+		--resource-group ${RESOURCE_GROUP_NAME} \
+		--workspace-name ${WORKSPACE_NAME}
