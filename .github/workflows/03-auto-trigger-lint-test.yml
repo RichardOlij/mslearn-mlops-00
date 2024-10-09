@@ -1,6 +1,9 @@
+name: PR trigger lint train.
+
 on:
   pull_request:
     types: [opened, reopened]
+
 jobs:
   linting:
     name: linting

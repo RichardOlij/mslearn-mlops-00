@@ -66,7 +66,7 @@ job-experiment:
 		--resource-group ${RESOURCE_GROUP_NAME} \
 		--workspace-name ${WORKSPACE_NAME}
 job-production:
-	az ml job create \	
+	az ml job create \
 		--stream \
 		--file src/job_production.yml \
 		--resource-group ${RESOURCE_GROUP_NAME} \
