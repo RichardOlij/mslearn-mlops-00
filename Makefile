@@ -1,5 +1,5 @@
 LOCATION='westeurope'
-RESOURCE_GROUP_NAME = 'rg-makefile-ms-course-4'
+RESOURCE_GROUP_NAME = 'rg-makefile-ms-course-5'
 WORKSPACE_NAME = 'mlws-makefile-ms-course'
 SERVICE_PRINCIPAL_NAME_EXPERIMENT = 'sp-ms-course-exp'
 SERVICE_PRINCIPAL_NAME_PRODUCTION = 'sp-ms-course-prod'
