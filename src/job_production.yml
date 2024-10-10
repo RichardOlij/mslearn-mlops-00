@@ -4,11 +4,15 @@ command: >-
   python train.py 
   --training_data ${{inputs.training_data}}
   --reg_rate ${{inputs.reg_rate}}
+  --custom_model_output ${{outputs.output_folder}}
 inputs:
   training_data:
     type: uri_folder
     path: ../production/data
   reg_rate: 0.01
+outputs:
+  output_folder: 
+    type: mlflow_model # custom_model,custom_model,triton_model
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
 compute: azureml:custom-aml-cluster
 experiment_name: diabetes-production-run
